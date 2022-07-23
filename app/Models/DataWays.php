@@ -5,24 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Way extends Model
+class DataWays extends Model
 {
     use HasFactory;
     
     protected $fillable = [
         'id',
-        'user_id',
-        'url',
-        'active',
+        'way_id',
+        'status_code',
+        'body_response',
         'created_at',
         'updated_at'
     ];
-    public function user()
+
+    public function way()
     {
-        return $this->belongsTo(User::class);
-    }
-    public function dataWays()
-    {
-        return $this->hasOne(DataWays::class);
+        return $this->hasOne(Way::class);
     }
 }
