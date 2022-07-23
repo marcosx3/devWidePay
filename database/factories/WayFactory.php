@@ -21,6 +21,7 @@ class WayFactory extends Factory
            'user_id'=> User::all()->random()->id,
            'url' =>$this->faker->url(),
            'active' =>true,
+           'created_at' => $this->faker->dateTime(),
         ];
     }
 }

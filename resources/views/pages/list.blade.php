@@ -25,11 +25,12 @@
                     <?php foreach ($ways as $way): ?>
                     <tr>
                         <td>{{ $way->url }}</td>
-                        <td> {{ $way->active }} </td>
+                        <td> {{ $way->active ? 'Ativo':'Inativo' }} </td>
                         <td> <button type="submit" class="btn btn-outline-dark">🔍</button> </td>
+
                          <td> <button class="btn btn-warning d-inline-block "><a style="text-decoration: none;color:black"
                                 href="{{ route('ways.edit', $way->id) }}">Atualizar</a></button></td>
-                    <td>
+                        <td>
                         <form action="{{ route('way.delete', $way->id) }}" method="get">
                             <button class="btn btn-danger d-inline-block"><a
                                     style="text-decoration: none;">Excluir</a></button>
