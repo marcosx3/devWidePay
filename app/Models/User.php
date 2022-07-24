@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -44,6 +45,6 @@ class User extends Authenticatable
 
     public function ways()
     {
-        return $this->hasMany(Way::class);
+        return $this->hasMany(Way::class,"id");
     }
 }

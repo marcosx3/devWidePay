@@ -5,17 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WayRequestForm;
 use App\Models\User;
 use App\Models\Way;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class WayController extends Controller
 {
-    protected $user;
-    protected $ways;
-
-    public function __construct(User $user, Way $way)
+    public function __construct(Way $way, User $user)
     {
+        $this->way = $way;
         $this->user = $user;
-        $this->ways = $way;
     }
 
     //visualizar pagina de criacao de url
@@ -23,20 +21,30 @@ class WayController extends Controller
     {
         return view('pages.create');
     }
-    // create way
+
+    // create way - ok
     public function createWay(WayRequestForm $request)
     {
-        $ways = $request->only('way');
-        $this->model->create($ways);
+        $url = $request->only('url');
+        $way = new Way();
+        $way->url = $url['url'];
+        $way->user_id = Auth::user()->id;
+        $way->save();
+
+        $idUser = Auth::user()->getAuthIdentifier();
+        $ways = Way::all()->where('user_id', $idUser);
+        return view('pages.list', compact('ways'));
     }
 
 
     public function listWayView()
     {
-        $ways = $this->ways->all();
+        $idUser = Auth::user()->getAuthIdentifier();
+        $ways = Way::all()->where('user_id', $idUser);
         return view('pages.list', compact('ways'));
     }
 
+    //editar nao funfa
     public function editWayView($id)
     {
         $way = Way::find($id);
@@ -45,16 +53,14 @@ class WayController extends Controller
 
     public function updateWay(WayRequestForm $request, $id)
     {
-        $ways = $request->only('way');
-
+        $way = $request->only('url');
         DB::table('ways')
             ->where('id', $id)
             ->update([
-                'url' => $ways['way']
+                'url' => $way['url']
             ]);
 
-        $ways = $this->ways->all();
-        return view('pages.list', compact('ways'));
+        return redirect()->back();
     }
 
     public function deleteWay($id)
@@ -63,7 +69,6 @@ class WayController extends Controller
         DB::table('ways')
             ->where('id', $id)
             ->delete();
-        $ways = $this->ways->all();
-        return view('pages.list', compact('ways'));
+        return redirect()->back();
     }
 }

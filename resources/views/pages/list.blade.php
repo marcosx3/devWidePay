@@ -5,15 +5,12 @@
     <div class="container-fluid d-flex justify-content-center mt-5 mb-5">
         <h1> URL Cadastradas</h1>
     </div>
-    @if ($ways == null)
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <p class="d-flex justify-content-center">Não URL's para serem listados.</p>
-        </div>
-    @else
         <div class="container-fluid">
             <table class="table table-stripped">
                 <thead>
                     <tr>
+                        <th>ID-User</th>
+                        <th>User</th>
                         <th>URL</th>
                         <th>Status</th>
                         <th>Detalhes</th>
@@ -24,6 +21,8 @@
                 <tbody>
                     <?php foreach ($ways as $way): ?>
                     <tr>
+                        <td>{{ $way->user->id }}</td>
+                        <td>{{ $way->user->name }}</td>
                         <td>{{ $way->url }}</td>
                         <td> {{ $way->active ? 'Ativo':'Inativo' }} </td>
                         <td> <button type="submit" class="btn btn-outline-dark">🔍</button> </td>
@@ -41,5 +40,5 @@
                 </tbody>
             </table>
         </div>
-    @endif
+  
 @endsection

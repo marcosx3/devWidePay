@@ -19,10 +19,11 @@
             </div>
         @endif
         <div class="container d-flex mt-4 justify-content-center">
-            <form action="{{ route('way.create') }}" method="post" class=" ">
+            <form action="{{ route('way.create') }}" method="post">
                 @csrf
-                <label class="form-label" for="way">URL: </label>
-                <input type="text" name="way" id="way" style="width: 35vw">
+        
+                <label class="form-label" for="url">URL: </label>
+                <input type="text" name="url" id="url" style="width: 35vw">
 
                 <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,15 +12,17 @@ return new class extends Migration
      *
      * @return void
      */
+   
     public function up()
     {
+        
         Schema::create('ways', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
             ->constrained('users')
             ->onDelete('CASCADE')
             ->onUpdate('CASCADE');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
