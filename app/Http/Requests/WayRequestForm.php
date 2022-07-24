@@ -24,7 +24,7 @@ class WayRequestForm extends FormRequest
     public function rules()
     {
         return [
-            'way' => 'required|url'
+            'url' => 'required|url'
         ];
     }
 }

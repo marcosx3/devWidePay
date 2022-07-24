@@ -17,8 +17,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/home',[HomeController::class,'index'])->name('home');
     
-    Route::get('/way/cadastro',[WayController::class,'createWayView']);
-    Route::post('/way/cadastro',[WayController::class,'createWay'])->name('way.create');
+    Route::get('/way/cadastro/',[WayController::class,'createWayView']);
+    Route::post('/way/cadastro/',[WayController::class,'createWay'])->name('way.create');
 
     Route::get('/way/lista',[WayController::class,'listWayView']);
     Route::get('/ways/editar/{id}',[WayController::class, 'editWayView'])->name('ways.edit');

@@ -19,10 +19,10 @@
             </div>
         @endif
         <div class="container d-flex mt-4 justify-content-center">
-            <form action="{{ route('way.update',$way->id) }}" method="post" class=" ">
+            <form action="{{ route('way.update',$way->id) }}" method="post">
                 @csrf
-                <label class="form-label" for="way">URL: </label>
-                <input type="text" name="way" id="way" style="width: 35vw" value="{{$way->url}}">
+                <label class="form-label" for="url">URL: </label>
+                <input type="text" name="url" id="url" style="width: 35vw" value="{{$way->url}}">
 
                 <button type="submit" class="btn btn-outline-dark">Atualizar</button>
 
