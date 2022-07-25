@@ -7,7 +7,6 @@
         <div class="container-fluid d-flex justify-content-center">
             <h1>Cadastro de URL</h1>
         </div>
-
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
@@ -21,7 +20,7 @@
         <div class="container d-flex mt-4 justify-content-center">
             <form action="{{ route('way.create') }}" method="post">
                 @csrf
-        
+
                 <label class="form-label" for="url">URL: </label>
                 <input type="text" name="url" id="url" style="width: 35vw">
 

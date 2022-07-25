@@ -15,61 +15,53 @@ class WayController extends Controller
         $this->way = $way;
         $this->user = $user;
     }
-
-    //visualizar pagina de criacao de url
     public function createWayView()
     {
         return view('pages.create');
     }
-
-    // create way - ok
     public function createWay(WayRequestForm $request)
     {
         $url = $request->only('url');
         $way = new Way();
         $way->url = $url['url'];
         $way->user_id = Auth::user()->id;
-        $way->save();
 
-        $idUser = Auth::user()->getAuthIdentifier();
-        $ways = Way::all()->where('user_id', $idUser);
-        return view('pages.list', compact('ways'));
+        if ($way->save()) {
+            return redirect()->route("way.list")->with('success', "URL cadastrada com sucesso!");
+        }
+        return redirect()->route("way.list")->with('error', "URL não cadastrada entre em contato com o suporte!");
     }
-
-
     public function listWayView()
     {
         $idUser = Auth::user()->getAuthIdentifier();
         $ways = Way::all()->where('user_id', $idUser);
         return view('pages.list', compact('ways'));
     }
-
-    //editar nao funfa
     public function editWayView($id)
     {
         $way = Way::find($id);
         return view('pages.edit', compact('way'));
     }
-
-    public function updateWay(WayRequestForm $request,Way $way ,$id)
+    public function updateWay(WayRequestForm $request, Way $way, $id)
     {
         $aux = $request->only('url');
         $url = $aux['url'];
         $way = Way::find($id);
         $way->url = $url;
-        $way->update();
-
-        $idUser = Auth::user()->getAuthIdentifier();
-        $ways = Way::all()->where('user_id', $idUser);
-        return view('pages.list', compact('ways'));
-    
+        if($way->update())
+        {
+            return redirect()->route('way.list')->with('success',"URL atualizada com sucesso.");
+        }
+        return redirect()->route('way.list')->with('error',"URL não atualizada entre em contato com o suporte!");
     }
-    
     public function deleteWay($id, Way $way)
     {
         $way = Way::find($id);
-        $way->delete();
-        return redirect()->back();
+        if($way->delete())
+        {
+            return redirect()->back()->with("success","URL deletada com sucesso.");
+        }
+        return redirect()->back()->with("error","URL não deletada.");
+      
     }
-
 }
