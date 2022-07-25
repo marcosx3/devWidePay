@@ -7,7 +7,6 @@
         <div class="container-fluid d-flex justify-content-center">
             <h1>Atualizar URL</h1>
         </div>
-
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
