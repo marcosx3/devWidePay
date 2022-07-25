@@ -51,24 +51,25 @@ class WayController extends Controller
         return view('pages.edit', compact('way'));
     }
 
-    public function updateWay(WayRequestForm $request, $id)
+    public function updateWay(WayRequestForm $request,Way $way ,$id)
     {
-        $way = $request->only('url');
-        DB::table('ways')
-            ->where('id', $id)
-            ->update([
-                'url' => $way['url']
-            ]);
+        $aux = $request->only('url');
+        $url = $aux['url'];
+        $way = Way::find($id);
+        $way->url = $url;
+        $way->update();
 
-        return redirect()->back();
+        $idUser = Auth::user()->getAuthIdentifier();
+        $ways = Way::all()->where('user_id', $idUser);
+        return view('pages.list', compact('ways'));
+    
     }
-
-    public function deleteWay($id)
+    
+    public function deleteWay($id, Way $way)
     {
         $way = Way::find($id);
-        DB::table('ways')
-            ->where('id', $id)
-            ->delete();
+        $way->delete();
         return redirect()->back();
     }
+
 }
