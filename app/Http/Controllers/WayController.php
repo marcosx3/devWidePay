@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WayRequestForm;
+use App\Http\Controllers\DataWaysController;
+use App\Models\DataWays;
 use App\Models\User;
 use App\Models\Way;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class WayController extends Controller
 {
+
+    protected $dataWaysController;
+
     public function __construct(Way $way, User $user)
     {
         $this->way = $way;
@@ -27,6 +31,9 @@ class WayController extends Controller
         $way->user_id = Auth::user()->id;
 
         if ($way->save()) {
+            $aux = new DataWaysController();
+            $aux->monitoring_created_way($way->url,$way->id);
+
             return redirect()->route("way.list")->with('success', "URL cadastrada com sucesso!");
         }
         return redirect()->route("way.list")->with('error', "URL não cadastrada entre em contato com o suporte!");

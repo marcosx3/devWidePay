@@ -3,23 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataWays;
-use App\Models\User;
-use App\Models\Way;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class DataWaysController extends Controller
 {
-    public function __construct(User $user,Way $way,DataWays $dataways)
+    public function  __construct()
     {
-        $this->user = $user;
-        $this->way = $way;
-        $this->dataways = $dataways;
     }
 
-    public function monitoring_all_ways()
+    public function monitoring_created_way(String $way,$way_id)
     {
-        
+        $response =  Http::withOptions([
+            'verify' =>false,
+        ])->get($way);
+       
+       $dataWay = new DataWays();
+       $dataWay->way_id = $way_id;
+       $dataWay->body_response = $response->body();
+       $dataWay->status_code = $response->status();
+       $dataWay->save();
     }
 
+    public function monitoring_update_way()
+    {
 
+    }
 }
