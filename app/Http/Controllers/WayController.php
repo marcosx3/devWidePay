@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WayRequestForm;
 use App\Http\Controllers\DataWaysController;
+use App\Jobs\UpdateResponseWaysJOB;
 use App\Models\DataWays;
 use App\Models\User;
 use App\Models\Way;
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class WayController extends Controller
 {
@@ -32,7 +35,7 @@ class WayController extends Controller
 
         if ($way->save()) {
             $aux = new DataWaysController();
-            $aux->monitoring_created_way($way->url,$way->id);
+            $aux->monitoring_created_way($way->url, $way->id);
 
             return redirect()->route("way.list")->with('success', "URL cadastrada com sucesso!");
         }
@@ -40,6 +43,9 @@ class WayController extends Controller
     }
     public function listWayView()
     {
+
+        (new UpdateResponseWaysJOB())->dispatch();
+        sleep(3);
         $idUser = Auth::user()->getAuthIdentifier();
         $ways = Way::all()->where('user_id', $idUser);
         return view('pages.list', compact('ways'));
@@ -55,20 +61,17 @@ class WayController extends Controller
         $url = $aux['url'];
         $way = Way::find($id);
         $way->url = $url;
-        if($way->update())
-        {
-            return redirect()->route('way.list')->with('success',"URL atualizada com sucesso.");
+        if ($way->update()) {
+            return redirect()->route('way.list')->with('success', "URL atualizada com sucesso.");
         }
-        return redirect()->route('way.list')->with('error',"URL não atualizada entre em contato com o suporte!");
+        return redirect()->route('way.list')->with('error', "URL não atualizada entre em contato com o suporte!");
     }
     public function deleteWay($id, Way $way)
     {
         $way = Way::find($id);
-        if($way->delete())
-        {
-            return redirect()->back()->with("success","URL deletada com sucesso.");
+        if ($way->delete()) {
+            return redirect()->back()->with("success", "URL deletada com sucesso.");
         }
-        return redirect()->back()->with("error","URL não deletada.");
-      
+        return redirect()->back()->with("error", "URL não deletada.");
     }
 }
