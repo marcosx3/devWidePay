@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataWays;
+use App\Models\Way;
 use Illuminate\Support\Facades\Http;
 
 class DataWaysController extends Controller
@@ -24,8 +25,8 @@ class DataWaysController extends Controller
        $dataWay->save();
     }
 
-    public function monitoring_update_way()
+    public function monitoring_update_way(String $way,$way_id)
     {
-
+     
     }
 }
