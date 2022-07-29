@@ -10,7 +10,7 @@
         <table class="table table-stripped">
             <thead>
                 <tr>
-                    <th>ID-User</th>
+                    <th>ID</th>
                     <th>User</th>
                     <th>URL</th>
                     <th>Status</th>
@@ -22,7 +22,7 @@
             <tbody>
                 <?php foreach ($ways as $way): ?>
                 <tr>
-                    <td>{{ $way->user->id }}</td>
+                    <td>{{ $way->id }}</td>
                     <td>{{ $way->user->name }}</td>
                     <td>{{ $way->url }}</td>
                     <td> {{ $way->active ? 'Ativo' : 'Inativo' }} </td>
