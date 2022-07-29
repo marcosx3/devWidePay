@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WayRequestForm;
 use App\Http\Controllers\DataWaysController;
 use App\Jobs\UpdateResponseWaysJOB;
-use App\Models\DataWays;
 use App\Models\User;
 use App\Models\Way;
-use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
+
 
 class WayController extends Controller
 {
@@ -43,7 +41,9 @@ class WayController extends Controller
     }
     public function listWayView()
     {
+
         (new UpdateResponseWaysJOB())->dispatch();
+
         $idUser = Auth::user()->getAuthIdentifier();
         $ways = Way::all()->where('user_id', $idUser);
         return view('pages.list', compact('ways'));
