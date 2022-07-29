@@ -4,13 +4,16 @@ namespace App\Jobs;
 
 use App\Models\DataWays;
 use App\Models\Way;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+
 
 class UpdateResponseWaysJOB implements ShouldQueue
 {
@@ -33,20 +36,19 @@ class UpdateResponseWaysJOB implements ShouldQueue
      */
     public function handle()
     {
-        $ways = Way::all();
-        foreach($ways as $way)
-        {
+        $ways = DB::table('ways')->get();
+        foreach ($ways as $way) {
             $response =  Http::withOptions([
-                'verify' =>false,
-            ])->get($way);
+                'verify' => false,
+            ])->get($way->url);
 
-            $dataWay =  DataWays::find($way->id);
-            $dataWay->update([
-                "url" => $way->url,
-                "body_response" => $response->body(),
+            DB::table("data_ways")->where("way_id", $way->id)->update([
                 "status_code" => $response->status(),
+                "body_response" => $response->body(),
+                "created_at" => \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ]);
-            
+            sleep(1);
         }
     }
 }
