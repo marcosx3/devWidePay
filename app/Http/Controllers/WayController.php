@@ -43,7 +43,9 @@ class WayController extends Controller
     }
     public function listWayView()
     {
+
         (new UpdateResponseWaysJOB())->dispatch();
+
         $idUser = Auth::user()->getAuthIdentifier();
         $ways = Way::all()->where('user_id', $idUser);
         return view('pages.list', compact('ways'));
