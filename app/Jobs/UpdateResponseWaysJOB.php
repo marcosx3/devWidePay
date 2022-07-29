@@ -48,14 +48,6 @@ class UpdateResponseWaysJOB implements ShouldQueue
                 "created_at" => \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ]);
-            // DB::table("data_ways")
-            //     ->where('way_id', $way->id)
-            //     ->update([
-            //         "status_code" => $response->status(),
-            //         "body_response" => $response->body(),
-            //         "created_at" => \Carbon\Carbon::now(),
-            //         "updated_at" => \Carbon\Carbon::now(),
-            //     ]);
             sleep(1);
         }
     }
