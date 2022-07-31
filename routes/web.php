@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DataWaysController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WayController;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ways/editar/{id}',[WayController::class, 'editWayView'])->name('ways.edit');
     Route::post('/ways/atualizar/{id}',[WayController::class,'updateWay'])->name('way.update');
     Route::get('/ways/delete/{id}',[WayController::class,'deleteWay'])->name('way.delete');
+
+    Route::get('/way/details/{id}',[DataWaysController::class,"detailsView"])->name("way.details");
 });

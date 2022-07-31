@@ -26,7 +26,7 @@
                     <td>{{ $way->user->name }}</td>
                     <td>{{ $way->url }}</td>
                     <td> {{ $way->active ? 'Ativo' : 'Inativo' }} </td>
-                    <td> <button type="submit" class="btn btn-outline-dark">🔍</button> </td>
+                    <td> <a href="{{ route('way.details', $way->id) }}" style="text-decoration: none;" type="button">🔍 </a></td>
 
                     <td> <button class="btn btn-warning d-inline-block "><a style="text-decoration: none;color:black"
                                 href="{{ route('ways.edit', $way->id) }}">Atualizar</a></button></td>
