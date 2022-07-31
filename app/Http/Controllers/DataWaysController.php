@@ -10,6 +10,7 @@ class DataWaysController extends Controller
 {
     public function  __construct()
     {
+
     }
 
     public function monitoring_created_way(String $way, $way_id)
@@ -28,7 +29,11 @@ class DataWaysController extends Controller
         );
     }
 
-    public function monitoring_update_way(String $way, $way_id)
+    public function detailsView($id)
     {
+        $dataWays = DataWays::all()->where("id",$id);
+        return view('pages.details',compact("dataWays"));
     }
+
+   
 }
