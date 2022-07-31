@@ -20,7 +20,7 @@
             <tr>
                 <th>Body</th>
 
-                <td id=" {{ $data->body_response }}" name="texto"></td>
+                <td >{{ $data->body_response }}</td>
             <tr>
             </tr>
             <?php endforeach ?>
